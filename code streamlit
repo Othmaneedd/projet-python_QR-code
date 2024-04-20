@@ -1,0 +1,29 @@
+import streamlit as st
+import qrcode
+from PIL import Image, ImageTk
+from resizeimage import resizeimage
+
+class QR_code:
+    def __init__(self):
+        self.var_prenom = st.text_input("Prénom")
+        self.var_nom = st.text_input("Nom")
+        self.var_email = st.text_input("E-mail")
+        self.var_departement = st.text_input("Département")
+
+        if st.button("Valider"):
+            if self.var_prenom == '' or self.var_nom == '' or self.var_email == '' or self.var_departement == '':
+                st.error("Veuillez remplir tous les champs.")
+            else:
+                qr_info = f"Prénom: {self.var_prenom}\nNom: {self.var_nom}\nE-mail: {self.var_email}\nDépartement: {self.var_departement}"
+                qr_code = qrcode.make(qr_info)
+                qr_code = resizeimage.resize_cover(qr_code, [300, 300])
+                qr_code.save(f"Nom_{self.var_nom}.png")
+
+                st.image(qr_code, caption="QR Code généré", use_column_width=True)
+
+def main():
+    st.title("Formulaire QR code")
+    qr = QR_code()
+
+if __name__ == "__main__":
+    main()
