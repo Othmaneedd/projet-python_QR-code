@@ -58,13 +58,17 @@ class QR_code:
             qr_info =(f"Prenom:{self.var_prenom.get()}\n nom : {self.var_nom.get()}\n E-mail:{self.var_email.get()}\n Departement:{self.var_depar.get()}")
             qr_code = qrcode.make(qr_info)
 
-            qr_code = resizeimage.resize_cover(qr_code,[300,300])
+            qr_code = resizeimage.resize_cover(qr_code,[290,290])
             qr_code.save("C:/Users/mohamed/Desktop/projet python/Nom_"+str(self.var_nom.get()+'.png'))
             self.im = ImageTk.PhotoImage(qr_code)
             self.qr_code.config(image=self.im)   
+            self.qr_code.image = self.im  
 
             self.msg= "enregistrement effectué"
             self.lblmessage.config(text=self.msg,fg="green") 
+
+            self.qr_code.place(x=150, y=150, height=290, width=290)
+
     def annuler(self):
         self.var_prenom.set("")
         self.var_nom.set("")
@@ -73,6 +77,8 @@ class QR_code:
         self.mgs=""
         self.lblmessage.config(text=self.msg)
         self.qr_code.config(image="")
+        self.qr_code.place(x=100, y=100, height=300, width=300)
+
 root = Tk()
 obj = QR_code(root)
 root.mainloop()
